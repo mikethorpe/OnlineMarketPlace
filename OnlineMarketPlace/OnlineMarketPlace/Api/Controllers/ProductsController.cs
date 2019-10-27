@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineMarketPlace.Api.Dtos;
 using OnlineMarketPlace.Domain.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,15 +21,16 @@ namespace OnlineMarketPlace.Controllers
         public async Task<IActionResult> GetProductsAsync()
         {
             var products = await _productsService.ListAsync();
-            var productViewModels = products.Select(p =>
-                new
+
+            var productViewDtos = products.Select(p =>
+                new ViewProductDto
                 {
-                    p.Id,
-                    p.Name,
+                    Id = p.Id,
+                    Name = p.Name,
                     Price = p.Price.ToString("n2")
                 }).ToList();
 
-            return Ok(productViewModels);
+            return Ok(productViewDtos);
         }
     }
 }
