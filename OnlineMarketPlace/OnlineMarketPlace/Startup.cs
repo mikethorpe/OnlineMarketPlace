@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OnlineMarketPlace.Api.Mapping;
 using OnlineMarketPlace.Domain.Interfaces;
-using OnlineMarketPlace.Domain.Services.cs;
+using OnlineMarketPlace.Domain.Services;
 using OnlineMarketPlace.Persistence.Contexts;
 using OnlineMarketPlace.Persistence.Repositories;
 using Microsoft.OpenApi.Models;

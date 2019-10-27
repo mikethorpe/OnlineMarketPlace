@@ -53,7 +53,6 @@ namespace OnlineMarketPlace.Controllers
             if (product == null) return NotFound();
 
             var productViewDto = _mapper.MapProductToViewModel(product);
-
             return Ok(productViewDto);
         }
 
@@ -61,17 +60,13 @@ namespace OnlineMarketPlace.Controllers
         /// Create a product
         /// </summary>
         /// <response code="200">If the product has been created</response>
-        /// <response code="400">If the creation fails</response>
         [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
         [HttpPost("product")]
         public async Task<IActionResult> CreateProductAsync([FromForm] CreateUpdateProductDto createUpdateProductDto)
         {
             var product = _mapper.MapCreateUpdateDtoToProduct(createUpdateProductDto);
-            var response = await _productsService.CreateProductAsync(product);
-
-            if (response) return Ok();
-            return BadRequest("Failed to add product");
+            await _productsService.CreateProductAsync(product);
+            return Ok();
         }
 
         /// <summary>

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace OnlineMarketPlace.Domain.Services.cs
+namespace OnlineMarketPlace.Domain.Services
 {
     public class ProductsService : IProductsService
     {
@@ -24,16 +24,9 @@ namespace OnlineMarketPlace.Domain.Services.cs
 
         public async Task<bool> CreateProductAsync(Product product)
         {
-            try
-            {
-                await _repo.AddAsync(product);
-                await _unitOfWork.CompleteAsync();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            await _repo.AddAsync(product);
+            await _unitOfWork.CompleteAsync();
+            return true;
         }
 
         public async Task<Product> FindProductByIdAsync(int id)
@@ -50,16 +43,10 @@ namespace OnlineMarketPlace.Domain.Services.cs
             existingProduct.Name = updatedProduct.Name ?? existingProduct.Name;
             existingProduct.Price = updatedProduct.Price != default ? updatedProduct.Price : existingProduct.Price;
 
-            try
-            {
-                _repo.UpdateProductAsync(existingProduct);
-                await _unitOfWork.CompleteAsync();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            _repo.UpdateProductAsync(existingProduct);
+            await _unitOfWork.CompleteAsync();
+
+            return true;
         }
 
         public async Task<bool> DeleteProductByIdAsync(int id)
@@ -67,16 +54,10 @@ namespace OnlineMarketPlace.Domain.Services.cs
             var existingProduct = await _repo.FindProductByIdAsync(id);
             if (existingProduct == null) return false;
 
-            try
-            {
-                _repo.Remove(existingProduct);
-                await _unitOfWork.CompleteAsync();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            _repo.Remove(existingProduct);
+            await _unitOfWork.CompleteAsync();
+
+            return true;
         }
     }
 }
