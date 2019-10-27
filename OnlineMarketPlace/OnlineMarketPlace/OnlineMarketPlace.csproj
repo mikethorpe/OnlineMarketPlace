@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Api.Tests\" />
-    <Folder Include="Persistence\Migrations\" />
+    <Folder Include="Persistence\Repositories\" />
   </ItemGroup>
 
 </Project>

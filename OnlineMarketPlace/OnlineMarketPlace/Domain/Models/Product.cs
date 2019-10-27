@@ -1,4 +1,4 @@
-﻿namespace OnlineMarketPlace.Domain
+﻿namespace OnlineMarketPlace.Domain.Models
 {
     public class Product
     {

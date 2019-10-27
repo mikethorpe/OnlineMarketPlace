@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OnlineMarketPlace.Domain;
+using OnlineMarketPlace.Domain.Models;
 
 namespace OnlineMarketPlace.Persistence.Contexts
 {
