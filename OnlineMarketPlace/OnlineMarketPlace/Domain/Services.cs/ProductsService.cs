@@ -40,5 +40,26 @@ namespace OnlineMarketPlace.Domain.Services.cs
         {
             return await _repo.FindProductByIdAsync(id);
         }
+
+        public async Task<bool> UpdateProductAsync(Product updatedProduct)
+        {
+            var existingProduct = await _repo.FindProductByIdAsync(updatedProduct.Id);
+            if (existingProduct == null) return false;
+
+            // Only update the fields provided
+            existingProduct.Name = updatedProduct.Name ?? existingProduct.Name;
+            existingProduct.Price = updatedProduct.Price != default ? updatedProduct.Price : existingProduct.Price;
+
+            try
+            {
+                _repo.UpdateProductAsync(existingProduct);
+                await _unitOfWork.CompleteAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

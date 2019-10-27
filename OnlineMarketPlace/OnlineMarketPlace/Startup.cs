@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OnlineMarketPlace.Api.Mapping;
 using OnlineMarketPlace.Domain.Interfaces;
 using OnlineMarketPlace.Domain.Services.cs;
 using OnlineMarketPlace.Persistence.Contexts;
@@ -31,6 +32,7 @@ namespace OnlineMarketPlace
             services.AddScoped<IProductsRepository, ProductsRepository>();
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IDtoMapper, DtoMapper>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineMarketPlace.Api.Dtos;
+using OnlineMarketPlace.Api.Mapping;
 using OnlineMarketPlace.Domain.Interfaces;
-using OnlineMarketPlace.Domain.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,56 +12,42 @@ namespace OnlineMarketPlace.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductsService _productsService;
+        private readonly IDtoMapper _mapper;
 
-        public ProductsController(IProductsService productsService)
+        public ProductsController(IProductsService productsService, IDtoMapper mapper)
         {
             _productsService = productsService;
+            _mapper = mapper;
         }
 
         [HttpGet("products")]
         public async Task<IActionResult> GetProductsAsync()
         {
             var products = await _productsService.ListAsync();
-
             var productViewDtos = products.Select(p =>
-                new ViewProductDto
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price.ToString("n2")
-                }).ToList();
+                _mapper.MapProductToViewModel(p))
+                .ToList();
 
             return Ok(productViewDtos);
         }
-        
+
+
         [HttpGet("product/{id}")]
         public async Task<IActionResult> GetProduct(int id)
         {
             var product = await _productsService.FindProductByIdAsync(id);
             if (product == null) return NotFound();
 
-            var productViewDto = new ViewProductDto
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Price = product.Price.ToString("n2")
-            };
+            var productViewDto = _mapper.MapProductToViewModel(product);
 
             return Ok(productViewDto);
         }
 
         [HttpPost("product")]
-        public async Task<IActionResult> CreateProductAsync([FromForm] CreateUpdateProductDto createProductDto)
+        public async Task<IActionResult> CreateProductAsync([FromForm] CreateUpdateProductDto createUpdateProductDto)
         {
-            float createProductDtoPriceFloat;
-            float.TryParse(createProductDto.Price, out createProductDtoPriceFloat);
-            if (createProductDtoPriceFloat == default) return BadRequest("Product price invalid");
-
-            var product = new Product
-            {
-                Name = createProductDto.Name,
-                Price = createProductDtoPriceFloat
-            };
+            var product = _mapper.MapCreateUpdateDtoToProduct(createUpdateProductDto);
+            if (product == null) return BadRequest();
 
             var response = await _productsService.CreateProductAsync(product);
 
@@ -69,5 +55,16 @@ namespace OnlineMarketPlace.Controllers
             return BadRequest("Failed to add product");
         }
 
+        [HttpPut("product/{id}")]
+        public async Task<IActionResult> UpdateProductAsync(int id, [FromForm] CreateUpdateProductDto createUpdateProductDto)
+        {
+            var product = _mapper.MapCreateUpdateDtoToProduct(createUpdateProductDto);
+            product.Id = id;
+
+            var response = await _productsService.UpdateProductAsync(product);
+
+            if (response) return Ok();
+            return NotFound();
+        }
     }
 }

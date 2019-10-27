@@ -31,5 +31,9 @@ namespace OnlineMarketPlace.Persistence.Repositories
             await _context.Products.AddAsync(product);
         }
 
+        public void UpdateProductAsync(Product updatedProduct)
+        {
+            _context.Products.Update(updatedProduct);
+        }
     }
 }

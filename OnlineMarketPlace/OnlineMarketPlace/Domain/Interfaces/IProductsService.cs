@@ -9,5 +9,6 @@ namespace OnlineMarketPlace.Domain.Interfaces
         Task<IEnumerable<Product>> ListAsync();
         Task<bool> CreateProductAsync(Product product);
         Task<Product> FindProductByIdAsync(int id);
+        Task<bool> UpdateProductAsync(Product product);
     }
 }
