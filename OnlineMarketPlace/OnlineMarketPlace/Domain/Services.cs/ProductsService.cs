@@ -35,5 +35,10 @@ namespace OnlineMarketPlace.Domain.Services.cs
                 return false;
             }
         }
+
+        public async Task<Product> FindProductByIdAsync(int id)
+        {
+            return await _repo.FindProductByIdAsync(id);
+        }
     }
 }

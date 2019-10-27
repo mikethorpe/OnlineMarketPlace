@@ -33,6 +33,22 @@ namespace OnlineMarketPlace.Controllers
 
             return Ok(productViewDtos);
         }
+        
+        [HttpGet("product/{id}")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            var product = await _productsService.FindProductByIdAsync(id);
+            if (product == null) return NotFound();
+
+            var productViewDto = new ViewProductDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price.ToString("n2")
+            };
+
+            return Ok(productViewDto);
+        }
 
         [HttpPost("product")]
         public async Task<IActionResult> CreateProductAsync([FromForm] CreateUpdateProductDto createProductDto)
