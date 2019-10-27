@@ -7,5 +7,6 @@ namespace OnlineMarketPlace.Domain.Interfaces
     public interface IProductsRepository
     {
         Task<IEnumerable<Product>> ListAsync();
+        Task AddAsync(Product product);
     }
 }

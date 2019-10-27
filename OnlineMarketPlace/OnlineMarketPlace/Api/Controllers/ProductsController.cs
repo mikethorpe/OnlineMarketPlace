@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineMarketPlace.Api.Dtos;
 using OnlineMarketPlace.Domain.Interfaces;
+using OnlineMarketPlace.Domain.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnlineMarketPlace.Controllers
 {
-    [Route("v1/[controller]")]
+    [Route("v1")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -17,7 +18,7 @@ namespace OnlineMarketPlace.Controllers
             _productsService = productsService;
         }
 
-        [HttpGet]
+        [HttpGet("products")]
         public async Task<IActionResult> GetProductsAsync()
         {
             var products = await _productsService.ListAsync();
@@ -32,5 +33,25 @@ namespace OnlineMarketPlace.Controllers
 
             return Ok(productViewDtos);
         }
+
+        [HttpPost("product")]
+        public async Task<IActionResult> CreateProductAsync([FromForm] CreateUpdateProductDto createProductDto)
+        {
+            float createProductDtoPriceFloat;
+            float.TryParse(createProductDto.Price, out createProductDtoPriceFloat);
+            if (createProductDtoPriceFloat == default) return BadRequest("Product price invalid");
+
+            var product = new Product
+            {
+                Name = createProductDto.Name,
+                Price = createProductDtoPriceFloat
+            };
+
+            var response = await _productsService.CreateProductAsync(product);
+
+            if (response) return Ok();
+            return BadRequest("Failed to add product");
+        }
+
     }
 }

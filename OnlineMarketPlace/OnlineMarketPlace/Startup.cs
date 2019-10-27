@@ -30,6 +30,7 @@ namespace OnlineMarketPlace
             // Register services for dependency injection
             services.AddScoped<IProductsRepository, ProductsRepository>();
             services.AddScoped<IProductsService, ProductsService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
