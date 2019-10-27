@@ -17,8 +17,7 @@ namespace OnlineMarketPlace.Api.Mapping
 
         public Product MapCreateUpdateDtoToProduct(CreateUpdateProductDto createUpdateProductDto)
         {
-            float createProductDtoPriceFloat;
-            float.TryParse(createUpdateProductDto.Price, out createProductDtoPriceFloat);
+            float.TryParse(createUpdateProductDto.Price, out float createProductDtoPriceFloat);
 
             return new Product
             {
