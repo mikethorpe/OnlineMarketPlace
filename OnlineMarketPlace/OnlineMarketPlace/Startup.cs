@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OnlineMarketPlace.Domain.Interfaces;
+using OnlineMarketPlace.Domain.Services.cs;
 using OnlineMarketPlace.Persistence.Contexts;
+using OnlineMarketPlace.Persistence.Repositories;
 
 namespace OnlineMarketPlace
 {
@@ -23,6 +26,10 @@ namespace OnlineMarketPlace
 
             services.AddDbContext<OnlineMarketPlaceContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("OnlineMarketPlaceDb")));
+
+            // Register services for dependency injection
+            services.AddScoped<IProductsRepository, ProductsRepository>();
+            services.AddScoped<IProductsService, ProductsService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -36,7 +43,6 @@ namespace OnlineMarketPlace
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

@@ -18,9 +18,9 @@ namespace OnlineMarketPlace.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("OnlineMarketPlace.Domain.Product", b =>
+            modelBuilder.Entity("OnlineMarketPlace.Domain.Models.Product", b =>
                 {
-                    b.Property<int>("ProductCode")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -30,27 +30,27 @@ namespace OnlineMarketPlace.Persistence.Migrations
                         .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 38, scale: 17)))
                         .HasColumnType("decimal(5,2)");
 
-                    b.HasKey("ProductCode");
+                    b.HasKey("Id");
 
                     b.ToTable("Products");
 
                     b.HasData(
                         new
                         {
-                            ProductCode = 1,
+                            Id = 1,
                             Name = "Lavender heart",
                             Price = 9.25m
                         },
                         new
                         {
-                            ProductCode = 2,
+                            Id = 2,
                             Name = "Personalised cufflinks",
                             Price = 45m
                         },
                         new
                         {
-                            ProductCode = 3,
-                            Name = "Kids T - shirt",
+                            Id = 3,
+                            Name = "Kids T-shirt",
                             Price = 19.95m
                         });
                 });

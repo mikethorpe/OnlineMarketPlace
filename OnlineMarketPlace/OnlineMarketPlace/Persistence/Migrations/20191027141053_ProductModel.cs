@@ -11,30 +11,30 @@ namespace OnlineMarketPlace.Persistence.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    ProductCode = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(type: "decimal(5,2)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.ProductCode);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "ProductCode", "Name", "Price" },
+                columns: new[] { "Id", "Name", "Price" },
                 values: new object[] { 1, "Lavender heart", 9.25m });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "ProductCode", "Name", "Price" },
+                columns: new[] { "Id", "Name", "Price" },
                 values: new object[] { 2, "Personalised cufflinks", 45m });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "ProductCode", "Name", "Price" },
-                values: new object[] { 3, "Kids T - shirt", 19.95m });
+                columns: new[] { "Id", "Name", "Price" },
+                values: new object[] { 3, "Kids T-shirt", 19.95m });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

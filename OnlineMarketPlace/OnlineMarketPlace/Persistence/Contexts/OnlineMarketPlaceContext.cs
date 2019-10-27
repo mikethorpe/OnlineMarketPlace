@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineMarketPlace.Domain.Models;
+using System;
 
 namespace OnlineMarketPlace.Persistence.Contexts
 {
@@ -15,7 +16,7 @@ namespace OnlineMarketPlace.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>()
-                .HasKey(p => p.ProductCode);
+                .HasKey(p => p.Id);
 
             // Assumption => price does not exceed 999.99
             modelBuilder.Entity<Product>()
@@ -26,20 +27,20 @@ namespace OnlineMarketPlace.Persistence.Contexts
                 .HasData(
                     new
                     {
-                        ProductCode = 1,
+                        Id = 1,
                         Name = "Lavender heart",
                         Price = 9.25f
                     },
                     new
                     {
-                        ProductCode = 2,
+                        Id = 2,
                         Name = "Personalised cufflinks",
                         Price = 45.00f
                     },
                     new
                     {
-                        ProductCode = 3,
-                        Name = "Kids T - shirt",
+                        Id = 3,
+                        Name = "Kids T-shirt",
                         Price = 19.95f
                     }
                 );
