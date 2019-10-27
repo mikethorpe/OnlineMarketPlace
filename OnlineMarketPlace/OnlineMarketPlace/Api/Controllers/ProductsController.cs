@@ -31,7 +31,6 @@ namespace OnlineMarketPlace.Controllers
             return Ok(productViewDtos);
         }
 
-
         [HttpGet("product/{id}")]
         public async Task<IActionResult> GetProduct(int id)
         {
@@ -66,5 +65,14 @@ namespace OnlineMarketPlace.Controllers
             if (response) return Ok();
             return NotFound();
         }
+
+        [HttpDelete("product/{id}")]
+        public async Task<IActionResult> DeleteProductAsync(int id)
+        {
+            var response = await _productsService.DeleteProductByIdAsync(id);
+            if (response) return Ok();
+            return NotFound();
+        }
+
     }
 }

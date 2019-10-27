@@ -35,5 +35,10 @@ namespace OnlineMarketPlace.Persistence.Repositories
         {
             _context.Products.Update(updatedProduct);
         }
+
+        public void Remove(Product product)
+        {
+            _context.Products.Remove(product);
+        }
     }
 }

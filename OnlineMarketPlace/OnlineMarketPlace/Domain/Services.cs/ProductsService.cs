@@ -61,5 +61,22 @@ namespace OnlineMarketPlace.Domain.Services.cs
                 return false;
             }
         }
+
+        public async Task<bool> DeleteProductByIdAsync(int id)
+        {
+            var existingProduct = await _repo.FindProductByIdAsync(id);
+            if (existingProduct == null) return false;
+
+            try
+            {
+                _repo.Remove(existingProduct);
+                await _unitOfWork.CompleteAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace OnlineMarketPlace.Domain.Interfaces
         Task<bool> CreateProductAsync(Product product);
         Task<Product> FindProductByIdAsync(int id);
         Task<bool> UpdateProductAsync(Product product);
+        Task<bool> DeleteProductByIdAsync(int id);
     }
 }
